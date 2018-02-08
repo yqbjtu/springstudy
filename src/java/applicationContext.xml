@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 目标对象 -->
+    <bean id="service" class="com.yq.aop.service.ServiceImpl"></bean>
+
+    <!-- 切面:通知 -->
+    <bean id="beforeAdvice" class="com.yq.aop.aop.DemoMethodBeforeAdvice"></bean>
+
+    <!-- *********************************************** -->
+
+    <!-- 1.*:NameMatchMethodPointcutAdvisor 名称匹配方法切入点顾问 -->
+    <!-- 切面:顾问 顾问(Advisor)要包装通知（Advice） -->    
+    
+    <!-- <bean id="beforeAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor"> -->
+        <!--<property name="advice" ref="beforeAdvice"></property> -->
+        <!--指定需要增强的方法：这里是"methodAdd"()方法，而methodSubtract()方法则不会增强   -->
+        <!-- <property name="mappedName" value="methodAdd"></property>-->
+        <!-- 也可以使用mappedNames指定多个方法-->
+        <!-- <property name="mappedNames" value="methodAdd,methodSubtract"></property>-->
+    <!-- </bean>-->
+
+    <!-- *********************************************** -->
+
+    <!-- 2.*:RegexpMethodPointcutAdvisor 正则表达式匹配方法切入点顾问 -->
+    <!-- 切面： 顾问 顾问(Advisor)要包装通知（Advice） -->
+     <bean id="beforeAdvisor"
+        class="org.springframework.aop.support.RegexpMethodPointcutAdvisor">
+        <property name="advice" ref="beforeAdvice"></property>
+        <property name="pattern" value=".*method.*"></property>
+    </bean> 
+
+    <!-- *********************************************** -->
+
+    <!-- 代理工厂Bean -->
+    <bean id="serviceProxy" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="service"></property>
+        <property name="interceptorNames" value="beforeAdvisor"></property>
+    </bean>
+</beans>
