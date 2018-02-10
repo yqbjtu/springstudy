@@ -41,4 +41,11 @@
         <property name="target" ref="service"></property>
         <property name="interceptorNames" value="beforeAdvisor"></property>
     </bean>
+    
+    <!-- 代理工厂Bean -->
+    <bean id="serviceProxy2" class="org.springframework.aop.framework.ProxyFactoryBean">
+        <property name="target" ref="service"></property>
+    </bean>
+
+
 </beans>
