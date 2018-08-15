@@ -81,7 +81,6 @@ public class DistLock {
                 // 返回-1代表key没有设置超时时间，为key设置一个超时时间
                 long expired = template.getExpire(lockKey);
                 if (expired == -1) {
-                   // conn.expire(lockKey, lockExpire);
                     template.expire(lockKey, lockExpiredTime, TimeUnit.MILLISECONDS);
                 }
 

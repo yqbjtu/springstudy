@@ -31,6 +31,8 @@ public class RedisConfig {
     public RedisTemplate<String, String> redisTemplate(RedisConnectionFactory factory){
         RedisTemplate<String, String> redisTemplate = new RedisTemplate<String,String>();
         redisTemplate.setConnectionFactory(factory);
+        //即使把StringRedisTemplate的序列化类修改成RedisTemplate的JdkSerializationRedisSerializer
+        //最后还是无法获取被序列化的对象数据，即使是没有转化为对象的字节数组，代码如下
         RedisSerializer<String> redisSerializer = new StringRedisSerializer();// Long类型不可以会出现异常信息;
         redisTemplate.setKeySerializer(redisSerializer);
         redisTemplate.setHashKeySerializer(redisSerializer);
